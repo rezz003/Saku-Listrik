@@ -8,10 +8,16 @@ use App\Models\Penggunaan;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * [Description PenggunaanController]
+ */
 class PenggunaanController extends Controller
 {
     
 
+    /**
+     * @return View
+     */
     public function index() : View{
         $penggunaanData = Penggunaan::with('pelanggan')->orderBy('created_at', 'desc')
         ->paginate(10);
@@ -19,6 +25,11 @@ class PenggunaanController extends Controller
         return view('penggunaan.index',compact('penggunaanData','pelangganData'));
     }
 
+    /**
+     * @param Request $request
+     * 
+     * @return [type]
+     */
     public function store(Request $request)
      {
         $penggunaan = new Penggunaan;
