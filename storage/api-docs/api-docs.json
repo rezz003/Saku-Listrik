@@ -1,0 +1,87 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tarif API",
+        "description": "API untuk mengelola tarif listrik",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/tarif": {
+            "get": {
+                "summary": "Get list of tariffs",
+                "operationId": "030f20474147b09798a981a2af3f6cda",
+                "responses": {
+                    "200": {
+                        "description": "A list of tariffs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tarif"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add a new tariff",
+                "operationId": "3bf5b2e9aed9922700b2a2d1d2e10e8f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tarif"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tariff created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Tarif": {
+                "title": "Tarif",
+                "description": "Model tarif",
+                "properties": {
+                    "id_tarif": {
+                        "title": "ID",
+                        "description": "ID of the tariff",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "daya": {
+                        "title": "Daya",
+                        "description": "Daya listrik dalam watt",
+                        "type": "integer",
+                        "example": 900
+                    },
+                    "tarifperkwh": {
+                        "title": "Tarif per KWh",
+                        "description": "Tarif per KWh dalam rupiah",
+                        "type": "number",
+                        "format": "float",
+                        "example": 1352
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Tarif"
+                }
+            }
+        }
+    }
+}
