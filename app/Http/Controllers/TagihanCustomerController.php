@@ -10,16 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class TagihanCustomerController extends Controller
 {
-    public function cekTagihan(Request $request)
+    public function showDashboard(Request $request)
     {
-        $search = $request->input('search');
         $userId = Auth::id();
+        $search = $request->input('search');
         $tagihanData = collect();
         $searchPerformed = false;
-        $historyPembayaran = Pembayaran::with('pelanggan')
-                                ->where('id_user', $userId)
-                                ->get();
-
 
         if ($search) {
             $tagihanData = Tagihan::with('pelanggan')
@@ -30,18 +26,16 @@ class TagihanCustomerController extends Controller
             $searchPerformed = true;
         }
 
-        return view('dashboard', compact('tagihanData', 'searchPerformed','historyPembayaran'));
-    }
-
-    public function showDashboard()
-    {
-        $userId = Auth::id();
-        $tagihanData = collect();
-        $searchPerformed = false;
         $historyPembayaran = Pembayaran::with('pelanggan')
-                                ->where('id_user', $userId)
-                                ->get();
+            ->where('id_user', $userId)
+            ->get();
 
         return view('dashboard', compact('tagihanData', 'searchPerformed', 'historyPembayaran'));
+    }
+
+    // Redirect cekTagihan to showDashboard with the search parameter
+    public function cekTagihan(Request $request)
+    {
+        return $this->showDashboard($request);
     }
 }

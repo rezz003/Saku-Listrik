@@ -24,7 +24,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', [TagihanCustomerController::class, 'showDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [TagihanCustomerController::class, 'showDashboard'])->middleware(['auth', 'verified','auth.customer'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -42,7 +42,7 @@ Route::middleware('auth','admin')->group(function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','auth.customer')->group(function () {
 
     Route::get('/dashboard/cektagihan', [TagihanCustomerController::class, 'cekTagihan'])->name('cek.tagihan');
     Route::get('/pembayaran/{tagihan}', [PembayaranCustomerController::class, 'create'])->name('pembayaran.create');
@@ -67,6 +67,7 @@ Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pel
 
 Route::get('/penggunaan', [PenggunaanController::class, 'index'])->middleware('auth.user');
 Route::post('/penggunaan', [PenggunaanController::class, 'store'])->middleware('auth.user');
+Route::delete('/penggunaan/{id}', [PenggunaanController::class, 'destroy'])->name('penggunaan.destroy')->middleware('auth.user');
 
 
 Route::middleware('auth.user')->group(function () {
@@ -76,11 +77,12 @@ Route::post('/tagihan/store', [TagihanController::class, 'store'])->name('tagiha
 Route::put('/tagihan/{id}', [TagihanController::class, 'update'])->name('tagihan.update');
 Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy'])->name('tagihan.destroy');
 
-// Route::get('admin/dashboard', [PembayaranCustomerController::class, 'history'])->name('riwayat.pembayaran');
+
 });
 
 
 
 Route::get('/pembayaran', [PembayaranController::class, 'index'])->middleware('auth.user');
 Route::delete('/pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy')->middleware('auth.user');
+Route::patch('/pembayaran/confirm/{id}', [PembayaranController::class, 'confirm'])->name('pembayaran.confirm')->middleware('auth.user');
 Route::get('/customer', [CustomerController::class, 'index'])->middleware('auth.user');

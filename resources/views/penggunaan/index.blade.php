@@ -55,7 +55,6 @@
 
 <div class="container w-70 d-flex justify-content-between align-items-end" style="height: 100px; text-decoration: underline;">
     <a href="{{url('tagihan')}}">Lihat Tagihan</a>
-    <!-- <a href="{{url('tagihan')}}">Lihat Tagihan</a> -->
 </div>
 
 <div class="container d-flex justify-content-center">
@@ -76,7 +75,7 @@
         <tbody>
             @foreach($penggunaanData as $penggunaan)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }} </th>
+                    <th scope="row">{{ $loop->iteration + ($penggunaanData->currentPage() - 1) * $penggunaanData->perPage() }} </th>
                     <td>{{ $penggunaan->id_penggunaan }}</td>
                     <td>{{ $penggunaan->id_pelanggan }}</td>
                     <td>{{ $penggunaan->pelanggan->nama_pelanggan }}</td>
@@ -90,24 +89,52 @@
                             $status = $tagihan ? $tagihan->status : null;
                         @endphp
                         @if($status == 'Lunas')
-                            <button class="btn btn-success" disabled>Tagihan Sudah Dibayar</button>
+                            <button class="btn btn-success" disabled>Tagihan Sudah Lunas</button>
                         @elseif($status == 'Proses')
                             <a href="{{url('pembayaran')}}"><button class="btn btn-warning" disabled>Cek Bukti Bayar</button></a>
-                        @elseif($status == 'Dibuat')
-                            <button class="btn btn-secondary" disabled>Tagihan Sedang Proses</button>
                         @else
-                            <form action="{{ route('tagihan.store') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id_pelanggan" value="{{ $penggunaan->id_pelanggan }}">
-                                <input type="hidden" name="id_penggunaan" value="{{ $penggunaan->id_penggunaan }}">
-                                <input type="datetime-local" name="tanggal_tagihan">
-                                <button type="submit" class="btn btn-warning">Buat Tagihan</button>
-                            </form>
+                            <button class="btn btn-danger" disabled>Tagihan Belum Dibayar</button>
                         @endif
+                        <button class="btn btn-danger delete-penggunaan" data-id="{{$penggunaan->id_penggunaan}}">Hapus</button>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+
+<div class="container d-flex justify-content-center mt-4">
+        {{ $penggunaanData->links() }}
+    </div>
+
+    <!-- alert konfirmasi delete -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.querySelectorAll('.delete-penggunaan').forEach(button => {
+        button.addEventListener('click', function () {
+            var id = this.getAttribute('data-id');
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data tagihan ini akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        });
+    });
+</script>
+
+@foreach($penggunaanData as $penggunaan)
+    <form id="delete-form-{{ $penggunaan->id_penggunaan }}" action="{{ route('penggunaan.destroy', $penggunaan->id_penggunaan) }}" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+@endforeach
+    
 </x-app-layout>

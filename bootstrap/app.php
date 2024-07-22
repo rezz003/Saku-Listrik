@@ -14,10 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\Admin::class,
             'auth.user' => \App\Http\Middleware\EnsureUserIsAuthenticated::class,
+            'auth.customer' => \App\Http\Middleware\Customer::class,
         ]);
-        // $middleware->alias([
-        //     'auth.user' => \App\Http\Middleware\EnsureUserIsAuthenticated::class,
-        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

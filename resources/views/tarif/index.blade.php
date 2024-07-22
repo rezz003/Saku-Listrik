@@ -12,7 +12,7 @@
     </div>
         
       <div class="container d-flex justify-content-start align-items-end w-50 mt-2 mb-2">
-        <a href="{{url('admin/dashboard')}}" style="color: #666666;">Kembali Ke Dashboard</a>
+        <a href="{{url('admin/dashboard')}}" style="color: #6b6be2;">Kembali Ke Dashboard</a>
       </div>
     
       <div class="container d-flex justify-content-center">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PenggunaanCreated;
 use App\Models\Pelanggan;
 use App\Models\Penggunaan;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class PenggunaanController extends Controller
     
 
     public function index() : View{
-        $penggunaanData = Penggunaan::with('pelanggan')->get();
+        $penggunaanData = Penggunaan::with('pelanggan')->orderBy('created_at', 'desc')
+        ->paginate(10);
         $pelangganData = Pelanggan::all();
         return view('penggunaan.index',compact('penggunaanData','pelangganData'));
     }
@@ -26,7 +28,21 @@ class PenggunaanController extends Controller
         $penggunaan->meteran_akhir = $request->meteran_akhir;
         $penggunaan->save();
 
-        return redirect('/penggunaan');
+        // event(new PenggunaanCreated($penggunaan));
 
+        return redirect('/penggunaan')->with('success', 'Penggunaan dan tagihan berhasil dibuat');
+
+     }
+
+     public function destroy($id){
+        try{
+
+            $penggunaan = Penggunaan::findOrFail($id);
+            $penggunaan->delete();
+    
+            return redirect('/penggunaan')->with('success', 'Penggunaan berhasil dihapus.');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus Penggunaan.');
+        }
      }
 }

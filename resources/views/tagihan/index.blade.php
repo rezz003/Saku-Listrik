@@ -5,18 +5,21 @@
     </h2>
 </x-slot>
 
-<div class="d-flex align-items-center justify-content-between mt-5 " style="width:92%;">
-    <div class="align-self-center ">
-    </div>
+<div class="d-flex justify-content-center">
+<div class="d-flex align-items-end justify-content-between mt-5 " style="width: 85%; ">
+  
+        <div >
+        <a href="{{url('admin/dashboard')}}" style="color: #6b6be2;">Kembali Ke Dashboard</a>
+        </div>
     <!-- search input -->
     <form action="{{ route('tagihan.search') }}" method="GET" class="input-group w-25 input-group-sm">
         <input type="search" name="search" class="form-control" placeholder="nomor kwh" aria-label="Example text with button addon" aria-describedby="button-addon1">
         <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Cari</button>
     </form>
 </div>
+</div>
 
-
-<div class="container d-flex justify-content-center">
+<div class="container d-flex justify-content-center mt-2">
     <table class="table  w-70 center">
         <thead>
         <tr>
@@ -34,7 +37,7 @@
         <tbody>
         @foreach($tagihanData as $tagihan)
     <tr>
-        <th scope="row">{{ $loop->iteration }}</th>
+        <th scope="row">{{ $loop->iteration + ($tagihanData->currentPage() - 1) * $tagihanData->perPage() }}</th>
         <td>{{ $tagihan->id_tagihan }}</td>
         <td>{{ $tagihan->id_penggunaan }}</td>
         <td>{{ $tagihan->pelanggan->nomor_kwh }}</td>
@@ -47,7 +50,7 @@
             <button class="btn btn-danger delete-tagihan" data-id="{{ $tagihan->id_tagihan }}">Hapus</button>
         </td>
     </tr>
-
+        </tbody>
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal{{ $tagihan->id_tagihan }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -87,8 +90,15 @@
                 </div>
             </div>
         </div>
+        
     </div>
 @endforeach
+</table>
+</div>
+
+<div class="container d-flex justify-content-center mt-4">
+        {{ $tagihanData->links() }}
+    </div>
 
 <!-- alert konfirmasi delete -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

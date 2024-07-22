@@ -57,7 +57,8 @@
           <!-- End Modal -->
     </div>
 
-    <div class="container d-flex justify-content-end align-content-end flex-wrap w-75" style="height: 30px;">
+    <div class="container d-flex justify-content-between align-content-end flex-wrap w-75" style="height: 30px;">
+    <a href="{{url('admin/dashboard')}}" style="color: #6b6be2;">Kembali Ke Dashboard</a>
         <div>
             <form action="{{ route('pelanggan.index') }}" method="GET">
                 <select name="daya" id="daya" class="form-select" onchange="this.form.submit()">
@@ -68,6 +69,7 @@
                 </select>
             </form>
         </div>
+        
     </div>
     <div class="container d-flex justify-content-center">
     <table class="table mt-2  w-75 center">

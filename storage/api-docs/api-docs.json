@@ -56,20 +56,7 @@
                 "title": "Tarif",
                 "description": "Model tarif",
                 "properties": {
-                    "id_tarif": {
-                        "title": "ID",
-                        "description": "ID of the tariff",
-                        "type": "integer",
-                        "format": "int64",
-                        "example": 1
-                    },
-                    "daya": {
-                        "title": "Daya",
-                        "description": "Daya listrik dalam watt",
-                        "type": "integer",
-                        "example": 900
-                    },
-                    "tarifperkwh": {
+                    "": {
                         "title": "Tarif per KWh",
                         "description": "Tarif per KWh dalam rupiah",
                         "type": "number",
