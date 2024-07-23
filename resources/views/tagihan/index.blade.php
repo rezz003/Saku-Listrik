@@ -47,7 +47,6 @@
         <td>{{ $tagihan->status }}</td>
         <td>
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $tagihan->id_tagihan }}">Edit</button>
-            <button class="btn btn-danger delete-tagihan" data-id="{{ $tagihan->id_tagihan }}">Hapus</button>
         </td>
     </tr>
         </tbody>
@@ -123,10 +122,4 @@
     });
 </script>
 
-@foreach($tagihanData as $tagihan)
-    <form id="delete-form-{{ $tagihan->id_tagihan }}" action="{{ route('tagihan.destroy', $tagihan->id_tagihan) }}" method="POST" style="display: none;">
-        @csrf
-        @method('DELETE')
-    </form>
-@endforeach
 </x-app-layout>

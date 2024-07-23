@@ -68,6 +68,7 @@ Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pel
 Route::get('/penggunaan', [PenggunaanController::class, 'index'])->middleware('auth.user');
 Route::post('/penggunaan', [PenggunaanController::class, 'store'])->middleware('auth.user');
 Route::delete('/penggunaan/{id}', [PenggunaanController::class, 'destroy'])->name('penggunaan.destroy')->middleware('auth.user');
+Route::put('/penggunaan/{id}', [PenggunaanController::class, 'update'])->name('penggunaan.update')->middleware('auth.user');
 
 
 Route::middleware('auth.user')->group(function () {
@@ -75,7 +76,7 @@ Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index
 Route::get('/tagihan/search', [TagihanController::class, 'search'])->name('tagihan.search');
 Route::post('/tagihan/store', [TagihanController::class, 'store'])->name('tagihan.store');
 Route::put('/tagihan/{id}', [TagihanController::class, 'update'])->name('tagihan.update');
-Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy'])->name('tagihan.destroy');
+// Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy'])->name('tagihan.destroy');
 
 
 });
@@ -85,4 +86,5 @@ Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy'])->name('tag
 Route::get('/pembayaran', [PembayaranController::class, 'index'])->middleware('auth.user');
 Route::delete('/pembayaran/{id}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy')->middleware('auth.user');
 Route::patch('/pembayaran/confirm/{id}', [PembayaranController::class, 'confirm'])->name('pembayaran.confirm')->middleware('auth.user');
+Route::get('/pembayaran/dwonload/pdf/', [PembayaranController::class, 'downloadPdf'])->name('pembayaran.download')->middleware('auth.user');
 Route::get('/customer', [CustomerController::class, 'index'])->middleware('auth.user');

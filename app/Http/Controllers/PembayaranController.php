@@ -6,11 +6,13 @@ use App\Models\Pembayaran;
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Mpdf\Mpdf;
 
 class PembayaranController extends Controller
 {
     public function index() : View{
-        $pembayaranData = Pembayaran::all();
+        $pembayaranData = Pembayaran::orderBy('created_at', 'desc')
+        ->paginate(10);
         return view('pembayaran.index',compact('pembayaranData'));
     }
 
@@ -38,5 +40,16 @@ class PembayaranController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengkonfirmasi tagihan.');
         }
+    }
+
+    public function downloadPDF()
+    {
+        $pembayaranData = Pembayaran::orderBy('created_at', 'desc')->get();
+
+        $html = view('pembayaran.pdf', compact('pembayaranData'))->render();
+
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('data-pembayaran.pdf', 'D');
     }
 }

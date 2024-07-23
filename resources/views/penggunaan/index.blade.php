@@ -58,7 +58,7 @@
 </div>
 
 <div class="container d-flex justify-content-center">
-    <table class="table mt-2 w-70 center">
+    <table class="table mt-2 center">
         <thead>
             <tr>
                 <th scope="col">No</th>
@@ -70,6 +70,7 @@
                 <th scope="col">Meteran Awal</th>
                 <th scope="col">Meteran Akhir</th>
                 <th scope="col">Buat Tagihan</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -95,10 +96,66 @@
                         @else
                             <button class="btn btn-danger" disabled>Tagihan Belum Dibayar</button>
                         @endif
-                        <button class="btn btn-danger delete-penggunaan" data-id="{{$penggunaan->id_penggunaan}}">Hapus</button>
+                    </td>
+                    <td>
+                    <button class="btn btn-danger delete-penggunaan mb-2" data-id="{{$penggunaan->id_penggunaan}}">Hapus</button>
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{$penggunaan->id_penggunaan}}">Update</button>
                     </td>
                 </tr>
+                <!-- modal update -->
+                <div class="modal fade" id="updateModal{{$penggunaan->id_penggunaan}}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateModalLabel">Form Update Penggunaan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{route('penggunaan.update', $penggunaan->id_penggunaan)}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <label for="">Nomor Kwh</label>
+                                <select class="form-select form-select-md w-20" aria-label="Default select example" name='id_pelanggan' >
+                                        <option value="{{ $penggunaan->id_pelanggan }}">{{ $penggunaan->pelanggan->nomor_kwh }}</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal_penggunaan" class="form-label">Tanggal Penggunaan</label>
+                                <input type="datetime-local" id="tanggal_penggunaan" name="tanggal_penggunaan" value="{{$penggunaan->tanggal_penggunaan}}" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="meteran_awal" class="form-label">Meteran Awal</label>
+                                <input type="number" class="form-control" id="meteran_awal" name="meteran_awal" style="border-radius: 8px;" value="{{$penggunaan->meteran_awal}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="meteran_akhir" class="form-label">Meteran Akhir</label>
+                                <input type="number" class="form-control" id="meteran_akhir" name="meteran_akhir" style="border-radius: 8px;" value="{{$penggunaan->meteran_akhir}}">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        @php
+                            $tagihan = $penggunaan->tagihan;
+                            $status = $tagihan ? $tagihan->status : null;
+                        @endphp
+                        @if($status == 'Lunas' || $status == 'Proses')
+                        <button type="submit" class="btn btn-success" disabled>Lunas</button>
+                        @else
+                        <button type="submit" class="btn btn-warning">Update</button>
+                        @endif
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+                <!-- end modal update -->
+
+
             @endforeach
+            
+
+
         </tbody>
     </table>
 </div>

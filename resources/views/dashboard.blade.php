@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="height: 100px;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar w/ text</a>
+            <a class="navbar-brand" href="#">SakuListrik</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -79,7 +79,7 @@
                                     <td>{{ $pembayaranItem->pelanggan->nama_pelanggan }}</td>
                                     <td>{{ $pembayaranItem->pelanggan->nomor_kwh }}</td>
                                     <td>{{ \Carbon\Carbon::parse($pembayaranItem->tanggal_pembayaran)->translatedFormat('Y F d') }}</td>
-                                    <td>{{ $pembayaranItem->total_bayar }}</td>
+                                    <td>{{ "Rp" . number_format($pembayaranItem->total_bayar,2,',','.') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -134,7 +134,7 @@
                                         </tr>
                                         <tr>
                                             <td>Tagihan</td>
-                                            <td>: {{ $tagihan->total_tagihan }}</td>
+                                            <td>: {{ "Rp" . number_format($tagihan->total_tagihan,2,',','.') }}</td>
                                         </tr>
                                         <tr>
                                             <td>Status</td>

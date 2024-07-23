@@ -4,6 +4,11 @@
         {{ __('Data Pembayaran') }}
     </h2>
 </x-slot>
+
+<div class="container d-flex justify-content-between align-items-center mt-5">
+    <a href="{{ route('pembayaran.download') }}" class="btn btn-primary">Download PDF</a>
+</div>
+
 <div class="container d-flex justify-content-center">
 <table class="table mt-5 w-70 center">
   <thead>
@@ -25,7 +30,7 @@
             $tagihan = $pembayaran->tagihan;
         @endphp
     <tr>
-      <th scope="row">{{ $pembayaran->id_pembayaran }} </th>
+      <th scope="row">{{ $loop->iteration + ($pembayaranData->currentPage() - 1) * $pembayaranData->perPage() }} </th>
       <td>{{ $pembayaran->id_tagihan }}</td>
       <td>{{ $pembayaran->id_pelanggan }}</td>
       <td>{{ $pembayaran->id_user }}</td>
@@ -56,6 +61,11 @@
   </tbody>
 </table>
 </div>
+
+
+<div class="container d-flex justify-content-center mt-4">
+        {{ $pembayaranData->links() }}
+    </div>
 
 <!-- alert konfirmasi delete -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -57,16 +57,16 @@ class TagihanController extends Controller
     }
     }
 
-    public function destroy($id)
-    {
-        try {
-            $tagihan = Tagihan::findOrFail($id);
-            $tagihan->delete();
+    // public function destroy($id)
+    // {
+    //     try {
+    //         $tagihan = Tagihan::findOrFail($id);
+    //         $tagihan->delete();
     
-            return redirect('/tagihan')->with('success', 'Tagihan berhasil dihapus.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus tagihan.');
-        }
-    } 
+    //         return redirect('/tagihan')->with('success', 'Tagihan berhasil dihapus.');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus tagihan.');
+    //     }
+    // } 
 
 }

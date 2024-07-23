@@ -56,4 +56,26 @@ class PenggunaanController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus Penggunaan.');
         }
      }
+
+     public function update(Request $request, $id){
+        $request->validate([
+            'id_pelanggan'=>'required|numeric',
+            'tanggal_penggunaan'=>'required|date',
+            'meteran_awal'=>'required|numeric',
+            'meteran_akhir'=>'required|numeric',
+        ]);
+
+        try {
+            $penggunaan = Penggunaan::findOrFail($id);
+            $penggunaan->id_pelanggan = $request->id_pelanggan;
+            $penggunaan->tanggal_penggunaan = $request->tanggal_penggunaan;
+            $penggunaan->meteran_awal = $request->meteran_awal;
+            $penggunaan->meteran_akhir = $request->meteran_akhir;
+            $penggunaan->save();
+
+            return redirect('/penggunaan')->with('success', 'Penggunaan berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui penggunaan.');
+        }
+     }
 }

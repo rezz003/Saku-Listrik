@@ -28,7 +28,7 @@ class TagihanCustomerController extends Controller
 
         $historyPembayaran = Pembayaran::with('pelanggan')
             ->where('id_user', $userId)
-            ->get();
+            ->orderBy('created_at','desc')->paginate(10);
 
         return view('dashboard', compact('tagihanData', 'searchPerformed', 'historyPembayaran'));
     }
