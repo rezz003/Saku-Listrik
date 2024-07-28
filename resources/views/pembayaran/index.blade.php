@@ -15,7 +15,7 @@
     <tr>
       <th scope="col">No</th>
       <th scope="col">Id Tagihan</th>
-      <th scope="col">Id Pelanggan</th>
+      <th scope="col">Nama Pelanggan</th>
       <th scope="col">Id User</th>
       <th scope="col">Tanggal Pembayaran</th>
       <th scope="col">Biaya Admin</th>
@@ -32,7 +32,7 @@
     <tr>
       <th scope="row">{{ $loop->iteration + ($pembayaranData->currentPage() - 1) * $pembayaranData->perPage() }} </th>
       <td>{{ $pembayaran->id_tagihan }}</td>
-      <td>{{ $pembayaran->id_pelanggan }}</td>
+      <td>{{ $pembayaran->pelanggan->nama_pelanggan }}</td>
       <td>{{ $pembayaran->id_user }}</td>
       <td>{{ $pembayaran->tanggal_pembayaran }}</td>
       <td>{{ $pembayaran->biaya_admin }}</td>

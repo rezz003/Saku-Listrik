@@ -64,6 +64,7 @@
             </div>
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
                 @if($historyPembayaran->isNotEmpty())
+                <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -84,6 +85,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
                 @else
                     <p>Belum ada riwayat pembayaran.</p>
                 @endif

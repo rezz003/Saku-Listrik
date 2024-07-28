@@ -44,7 +44,15 @@
         <td>{{ $tagihan->tanggal_tagihan }}</td>
         <td>{{ $tagihan->jumlah_kwh }}</td>
         <td>{{ "Rp " . number_format($tagihan->total_tagihan, 2, ',', '.') }}</td>
-        <td>{{ $tagihan->status }}</td>
+        <td>
+                        @if($tagihan->status == 'Lunas')
+                            <button class="btn btn-success" disabled>Tagihan Sudah Lunas</button>
+                        @elseif($tagihan->status == 'Proses')
+                            <a href="{{url('pembayaran')}}"><button class="btn btn-warning" disabled>Cek Bukti Bayar</button></a>
+                        @else
+                            <button class="btn btn-danger" disabled>Tagihan Belum Dibayar</button>
+                        @endif
+        </td>
         <td>
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $tagihan->id_tagihan }}">Edit</button>
         </td>
